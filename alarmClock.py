@@ -38,22 +38,37 @@ class Application(Tk):
         submit_button.grid(column=2, row=3)
 
     def start_timer(self, h, m, s):
-        print("starting timer...")
-        alarm_time = f"{int(h.get()):02d}:{int(m.get()):02d}:{int(s.get()):02d}"
-        print("alarm time: ", alarm_time)
-        while True:
-            time.sleep(1)
-            current_time = datetime.datetime.now().strftime("%H:%M:%S")
-            print("the current time is: ", current_time)
-            if current_time == alarm_time:
-                self.popup_win()
-                break
+        if (int(h.get()) > 23 or int(h.get()) < 0 or int(m.get()) > 59 or int(m.get()) < 0 or int(s.get()) > 59 or
+                int(s.get()) < 0):
+            self.error_win()
+        else:
+            print("starting timer...")
+            alarm_time = f"{int(h.get()):02d}:{int(m.get()):02d}:{int(s.get()):02d}"
+            print("alarm time: ", alarm_time)
+            while True:
+                time.sleep(1)
+                current_time = datetime.datetime.now().strftime("%H:%M:%S")
+                print("the current time is: ", current_time)
+                if current_time == alarm_time:
+                    self.popup_win()
+                    break
 
     def popup_win(self):
         popup = tk.Tk()
-        popup.wm_title("!")
+        popup.wm_title("TIMER DONE!")
         popup.minsize(300, 250)
         label = ttk.Label(popup, text="Your alarm has gone off!")
+        label.pack(side="top", fill="x", pady=10)
+        b1 = ttk.Button(popup, text="Okay", command=popup.destroy)
+        b1.pack()
+        popup.mainloop()
+
+
+    def error_win(self):
+        popup = tk.Tk()
+        popup.wm_title("ERROR!")
+        popup.minsize(300, 250)
+        label = ttk.Label(popup, text="There was an error, please check the numbers you entered and try again")
         label.pack(side="top", fill="x", pady=10)
         b1 = ttk.Button(popup, text="Okay", command=popup.destroy)
         b1.pack()
