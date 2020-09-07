@@ -11,6 +11,7 @@ from functools import partial
 class Application(Tk):
     def __init__(self):
         print("Starting application....")
+        print("the time is.....", datetime.datetime.now().strftime("%H:%M:%S"))
         super(Application, self).__init__()
         self.title("Alarm Clock application")
         self.minsize(500, 400)
@@ -37,7 +38,15 @@ class Application(Tk):
 
     def start_timer(self, h, m, s):
         print("starting timer...")
-        print(str(h.get()))
+        alarm_time = f"{int(h.get()):02d}:{int(m.get()):02d}:{int(s.get()):02d}"
+        print("alarm time: ", alarm_time)
+        while True:
+            time.sleep(1)
+            current_time = datetime.datetime.now().strftime("%H:%M:%S")
+            print("the current time is: ", current_time)
+            if current_time == alarm_time:
+                print("YUOUR ARLARM IS GOING OFF!!!!!!!")
+                break
         # print(f"{hour.get()}:{min.get()}:{sec.get()}")
 
     def say_hi(self):
