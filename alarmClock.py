@@ -33,7 +33,8 @@ class Application(Tk):
         entry_seconds = ttk.Entry(main_frame)
         entry_seconds.grid(column=3, row=1)
 
-        submit_button = ttk.Button(main_frame, text="Set Alarm", command=partial(self.start_timer, entry_hours, entry_minutes, entry_seconds))
+        submit_button = ttk.Button(main_frame, text="Set Alarm",
+                                   command=partial(self.start_timer, entry_hours, entry_minutes, entry_seconds))
         submit_button.grid(column=2, row=3)
 
     def start_timer(self, h, m, s):
@@ -45,28 +46,19 @@ class Application(Tk):
             current_time = datetime.datetime.now().strftime("%H:%M:%S")
             print("the current time is: ", current_time)
             if current_time == alarm_time:
-                print("YUOUR ARLARM IS GOING OFF!!!!!!!")
+                self.popup_win()
                 break
-        # print(f"{hour.get()}:{min.get()}:{sec.get()}")
 
-    def say_hi(self):
-        print("Hello")
+    def popup_win(self):
+        popup = tk.Tk()
+        popup.wm_title("!")
+        popup.minsize(300, 250)
+        label = ttk.Label(popup, text="Your alarm has gone off!")
+        label.pack(side="top", fill="x", pady=10)
+        b1 = ttk.Button(popup, text="Okay", command=popup.destroy)
+        b1.pack()
+        popup.mainloop()
 
 
 root = Application()
 root.mainloop()
-
-# def say_hi():
-#     print("Hello...")
-#
-#
-# root = Tk()
-# root.title("Alarm Clock App")
-# root.minsize(500, 450)
-#
-# main_frame = ttk.Frame(root)
-# main_frame.grid(column=0, row=0)
-#
-# button1 = ttk.Button(main_frame, text="press me", command=say_hi).grid(column=0, row=0)
-#
-# root.mainloop()
