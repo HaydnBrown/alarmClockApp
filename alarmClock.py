@@ -5,6 +5,7 @@ from tkinter import *
 import tkinter as tk
 from tkinter.ttk import *
 import tkinter.ttk as ttk
+from functools import partial
 
 
 class Application(Tk):
@@ -17,12 +18,27 @@ class Application(Tk):
 
     def create_widgets(self):
         main_frame = ttk.Frame(self).grid(column=0, row=0, sticky=(N, W, E, S))
-        label_hours = ttk.Label(main_frame, text="Hours").grid(column=1, row=0, sticky=S)
-        label_minutes = ttk.Label(main_frame, text="Minutes").grid(column=2, row=0, sticky=S)
-        label_seconds = ttk.Label(main_frame, text="Seconds").grid(column=3, row=0, sticky=S)
-        entry_hours = ttk.Entry(main_frame).grid(column=1, row=1)
-        entry_minutes = ttk.Entry(main_frame).grid(column=2, row=1)
-        entry_seconds = ttk.Entry(main_frame).grid(column=3, row=1)
+        label_hours = ttk.Label(main_frame, text="Hours")
+        label_hours.grid(column=1, row=0, sticky=S)
+        label_minutes = ttk.Label(main_frame, text="Minutes")
+        label_minutes.grid(column=2, row=0, sticky=S)
+        label_seconds = ttk.Label(main_frame, text="Seconds")
+        label_seconds.grid(column=3, row=0, sticky=S)
+
+        entry_hours = ttk.Entry(main_frame)
+        entry_hours.grid(column=1, row=1)
+        entry_minutes = ttk.Entry(main_frame)
+        entry_minutes.grid(column=2, row=1)
+        entry_seconds = ttk.Entry(main_frame)
+        entry_seconds.grid(column=3, row=1)
+
+        submit_button = ttk.Button(main_frame, text="Set Alarm", command=partial(self.start_timer, entry_hours, entry_minutes, entry_seconds))
+        submit_button.grid(column=2, row=3)
+
+    def start_timer(self, h, m, s):
+        print("starting timer...")
+        print(str(h.get()))
+        # print(f"{hour.get()}:{min.get()}:{sec.get()}")
 
     def say_hi(self):
         print("Hello")
