@@ -6,6 +6,7 @@ import tkinter as tk
 from tkinter.ttk import *
 import tkinter.ttk as ttk
 from functools import partial
+import threading
 
 
 class Application(Tk):
@@ -34,7 +35,7 @@ class Application(Tk):
         entry_seconds.grid(column=3, row=1)
 
         submit_button = ttk.Button(main_frame, text="Set Alarm",
-                                   command=partial(self.start_timer, entry_hours, entry_minutes, entry_seconds))
+                                   command=partial(self.start_timer_thread, entry_hours, entry_minutes, entry_seconds))
         submit_button.grid(column=2, row=3)
 
     def start_timer(self, h, m, s):
@@ -63,7 +64,6 @@ class Application(Tk):
         b1.pack()
         popup.mainloop()
 
-
     def error_win(self):
         popup = tk.Tk()
         popup.wm_title("ERROR!")
@@ -73,6 +73,14 @@ class Application(Tk):
         b1 = ttk.Button(popup, text="Okay", command=popup.destroy)
         b1.pack()
         popup.mainloop()
+
+    def start_timer_thread(self, h, m, s):
+        """
+        This function starts a thread for a given timer by using the threading library with the start_timer function
+        :return:
+        """
+        timer_thread = threading.Thread(target=self.start_timer, args=(h, m, s))
+        timer_thread.start()
 
 
 root = Application()
